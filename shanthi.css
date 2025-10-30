@@ -1,0 +1,17 @@
+function mytheme_output_customizer_css() {
+    // Retrieve the saved color value
+    $link_color = get_theme_mod( 'mytheme_link_color' ); 
+    
+    // Output the CSS
+    if ( $link_color ) {
+        ?>
+        <style type="text/css">
+            a {
+                /* The CSS rule that executes on the final frontend */
+                color: <?php echo esc_html( $link_color ); ?>;
+            }
+        </style>
+        <?php
+    }
+}
+add_action( 'wp_head', 'mytheme_output_customizer_css' );

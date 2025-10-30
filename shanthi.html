@@ -1,0 +1,29 @@
+function mytheme_customize_register( $wp_customize ) {
+    // Setting for text/HTML (PostMessage for live JS update)
+    $wp_customize->add_setting( 'mytheme_custom_headline', array(
+        'default'   => 'Your Custom Headline',
+        'transport' => 'postMessage', 
+        'sanitize_callback' => 'wp_kses_post', // Allows basic HTML
+    ) );
+    
+    // Setting for CSS color (PostMessage for live JS update)
+    $wp_customize->add_setting( 'mytheme_link_color', array(
+        'default'   => '#0073aa',
+        'transport' => 'postMessage', 
+        'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    
+    // Add a simple text control for the headline
+    $wp_customize->add_control( 'mytheme_custom_headline', array(
+        'label'    => __( 'Custom Headline Text', 'mytheme' ),
+        'section'  => 'title_tagline',
+        'type'     => 'text',
+    ) );
+    
+    // Add a color control for the link color
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'mytheme_link_color', array(
+        'label'    => __( 'Primary Link Color', 'mytheme' ),
+        'section'  => 'colors',
+    ) ) );
+}
+add_action( 'customize_register', 'mytheme_customize_register' );
